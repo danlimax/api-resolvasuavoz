@@ -28,36 +28,17 @@ app.get("/resolvasuavoz/solicitacoes", async (req, res) => {
   }
 });
 
-// app.post("/resolvasuavoz/solicitacoes", async (req, res) => {
-//   const { nome, email, assunto, mensagem, urlImagem } = req.body;
-
-//   const novaSolicitacao =
-//     "INSERT INTO solicitacoes (nome, email, assunto, mensagem, urlImg) VALUES (?, ?, ?, ?, ?)";
-
-//   const connection = await pool.getConnection();
-//   await connection.beginTransaction();
-//   try {
-//     await connection.execute(novaSolicitacao, [
-//       nome,
-//       email,
-//       assunto,
-//       mensagem,
-//       urlImagem,
-//     ]);
-
-//     // Commit da transação se tudo estiver OK
-//     await connection.commit();
-//     res.status(201).json({ success: "Solicitação criada com sucesso" });
-//   } catch (error) {
-//     // Rollback da transação em caso de erro
-//     await connection.rollback();
-//     console.error("Error executing query", error);
-//     res.status(500).json({ error: "Erro no servidor interno" });
-//   } finally {
-//     // Certificar-se de liberar a conexão
-//     connection.release();
-//   }
-// });
+app.post("/resolvasuavoz/solicitacoes", async (req, res) => {
+  const { nome, email, assunto, mensagem, urlImagem } = req.body;
+  try {
+    const novaSolicitacao = `INSERT INTO solicitacoes (nome, email, assunto, mensagem, urlImagem) VALUES (?, ?, ?, ?, ?)`;
+    pool.execute(novaSolicitacao, [nome, email, assunto, mensagem, urlImagem]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+    return;
+  }
+});
 
 app.listen(port, () => {
   console.log(`Servidor iniciado: http://localhost:${port}/`);
