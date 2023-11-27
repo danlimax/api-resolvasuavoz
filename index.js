@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   database: process.env.MYSQLDATABASE,
 });
 const app = express();
-const port = 50452;
+const port = 3000;
 
 app.use(express.json());
 app.use(cors());
