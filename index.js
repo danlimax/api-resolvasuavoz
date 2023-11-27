@@ -3,10 +3,11 @@ require("dotenv").config();
 const mysql = require("mysql2/promise");
 const cors = require("cors");
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: "resolvasuavoz",
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  host: process.env.MYSQLHOST,
+  port: process.env.MYSQLPORT,
+  database: process.env.MYSQLDATABASE,
 });
 const app = express();
 const port = 3000;
